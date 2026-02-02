@@ -1,0 +1,177 @@
+[
+  {
+    "@type": "ServiceSpecification",
+    "tmf_spec": "TMF633",
+    "id": "SPEC-FIBER-ACCESS",
+    "href": "/serviceCatalogManagement/v4/serviceSpecification/SPEC-FIBER-ACCESS",
+    "name": "Fiber Access Specification",
+    "version": "2.1",
+    "lifecycleStatus": "active",
+    "description": "Technical specification for fiber-based internet access service",
+    "serviceType": "CustomerFacingService",
+    "specCharacteristic": [
+      {
+        "name": "bandwidth",
+        "description": "Access bandwidth speed",
+        "valueType": "string",
+        "configurable": true,
+        "serviceSpecCharacteristicValue": [
+          {"value": "50Mbps", "isDefault": false},
+          {"value": "100Mbps", "isDefault": true},
+          {"value": "200Mbps", "isDefault": false},
+          {"value": "500Mbps", "isDefault": false},
+          {"value": "1Gbps", "isDefault": false}
+        ]
+      },
+      {
+        "name": "accessType",
+        "description": "Type of fiber access technology",
+        "valueType": "string",
+        "configurable": false,
+        "serviceSpecCharacteristicValue": [
+          {"value": "GPON", "isDefault": true},
+          {"value": "P2P", "isDefault": false}
+        ]
+      },
+      {
+        "name": "uptime_sla",
+        "description": "Service level agreement for uptime",
+        "valueType": "string",
+        "configurable": false,
+        "serviceSpecCharacteristicValue": [
+          {"value": "99.5%", "isDefault": false},
+          {"value": "99.9%", "isDefault": true}
+        ]
+      }
+    ],
+    "resourceSpecification": [
+      {
+        "id": "SPEC-GE-PORT",
+        "name": "Gigabit Ethernet Port Specification",
+        "role": "required",
+        "resourceSpecCharacteristic": [
+          {
+            "name": "minimumPortCapacity",
+            "description": "Port must support minimum capacity based on service bandwidth",
+            "constraint": [
+              {
+                "serviceCharacteristic": "bandwidth",
+                "value": "50Mbps",
+                "requiredCapacity": "100Mbps"
+              },
+              {
+                "serviceCharacteristic": "bandwidth",
+                "value": "100Mbps",
+                "requiredCapacity": "200Mbps"
+              },
+              {
+                "serviceCharacteristic": "bandwidth",
+                "value": "500Mbps",
+                "requiredCapacity": "600Mbps"
+              },
+              {
+                "serviceCharacteristic": "bandwidth",
+                "value": "1Gbps",
+                "requiredCapacity": "1000Mbps"
+              }
+            ]
+          },
+          {
+            "name": "portAvailability",
+            "description": "Port must have sufficient available capacity",
+            "validation": "Port.availableCapacity >= requiredCapacity"
+          }
+        ]
+      },
+      {
+        "id": "SPEC-FIBER-CABLE",
+        "name": "Fiber Optic Cable Specification",
+        "role": "required"
+      }
+    ],
+    "constraint": [
+      {
+        "name": "bandwidthUpgradeRule",
+        "description": "Bandwidth upgrades require port capacity validation",
+        "type": "ResourceConstraint"
+      }
+    ],
+    "attachment": [
+      {
+        "name": "Technical Design Document",
+        "description": "Detailed technical requirements and design",
+        "url": "/docs/fiber-access-tdd-v2.1.pdf"
+      }
+    ]
+  },
+  {
+    "@type": "ServiceSpecification",
+    "tmf_spec": "TMF633",
+    "id": "SPEC-MOBILE-VOICE",
+    "href": "/serviceCatalogManagement/v4/serviceSpecification/SPEC-MOBILE-VOICE",
+    "name": "Mobile Voice Service Specification",
+    "version": "3.0",
+    "lifecycleStatus": "active",
+    "description": "Technical specification for mobile voice telephony service",
+    "serviceType": "CustomerFacingService",
+    "specCharacteristic": [
+      {
+        "name": "msisdn",
+        "description": "Mobile Station International Subscriber Directory Number",
+        "valueType": "string",
+        "configurable": false
+      },
+      {
+        "name": "simType",
+        "description": "Type of SIM card",
+        "valueType": "string",
+        "configurable": true,
+        "serviceSpecCharacteristicValue": [
+          {"value": "Physical SIM", "isDefault": false},
+          {"value": "eSIM", "isDefault": true}
+        ]
+      },
+      {
+        "name": "voiceMailEnabled",
+        "description": "Voice mail feature status",
+        "valueType": "boolean",
+        "configurable": true,
+        "serviceSpecCharacteristicValue": [
+          {"value": "true", "isDefault": true},
+          {"value": "false", "isDefault": false}
+        ]
+      }
+    ],
+    "resourceSpecification": [
+      {
+        "id": "SPEC-ESIM-CARD",
+        "name": "eSIM Card Specification",
+        "role": "required",
+        "resourceSpecCharacteristic": [
+          {
+            "name": "availability",
+            "description": "SIM must be available in inventory pool",
+            "validation": "ResourcePool.available > 0"
+          }
+        ]
+      },
+      {
+        "id": "SPEC-MOBILE-NUMBER",
+        "name": "Mobile Phone Number Specification",
+        "role": "required",
+        "resourceSpecCharacteristic": [
+          {
+            "name": "availability",
+            "description": "Phone number must be available in pool",
+            "validation": "ResourcePool.available > 0"
+          },
+          {
+            "name": "areaCodeMatch",
+            "description": "Number must match customer preferred area code",
+            "validation": "optional"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,159 @@
+{
+  "ontology_version": "1.0",
+  "description": "TMF SID-based ontology for telecom order management",
+  "domains": {
+    "product": {
+      "description": "Commercial layer - customer-facing offerings",
+      "entities": {
+        "ProductOrder": {
+          "tmf_spec": "TMF622",
+          "definition": "Customer request to purchase, modify, or cancel products",
+          "states": ["acknowledged", "inProgress", "pending", "held", "completed", "failed", "cancelled"],
+          "relationships": {
+            "contains": ["ProductOrderItem"],
+            "triggers": ["ServiceOrder"],
+            "references": ["ProductOffering", "Product"]
+          },
+          "key_attributes": ["id", "state", "orderDate", "requestedCompletionDate"]
+        },
+        "ProductOrderItem": {
+          "tmf_spec": "TMF622",
+          "definition": "Individual line item within a product order",
+          "states": ["acknowledged", "inProgress", "pending", "completed", "failed"],
+          "relationships": {
+            "references": ["ProductOffering", "Product"],
+            "triggers": ["ServiceOrderItem"]
+          },
+          "key_attributes": ["id", "action", "state", "product", "productOffering"]
+        },
+        "ProductOffering": {
+          "tmf_spec": "TMF620",
+          "definition": "Commercial product available for sale",
+          "relationships": {
+            "requires": ["ServiceSpecification"],
+            "contains": ["ProductOfferingPrice"]
+          },
+          "key_attributes": ["id", "name", "lifecycleStatus", "validFor"]
+        },
+        "Product": {
+          "tmf_spec": "TMF637",
+          "definition": "Instance of a product offering purchased by customer",
+          "relationships": {
+            "realizedBy": ["Service"],
+            "instanceOf": ["ProductOffering"]
+          },
+          "key_attributes": ["id", "status", "startDate", "productOffering"]
+        }
+      }
+    },
+    "service": {
+      "description": "Technical realization layer - how products are delivered",
+      "entities": {
+        "ServiceOrder": {
+          "tmf_spec": "TMF641",
+          "definition": "Technical request to configure/provision services",
+          "states": ["acknowledged", "inProgress", "pending", "completed", "failed", "cancelled"],
+          "relationships": {
+            "triggeredBy": ["ProductOrder"],
+            "contains": ["ServiceOrderItem"],
+            "affects": ["Service"]
+          },
+          "key_attributes": ["id", "state", "orderDate", "category"]
+        },
+        "ServiceOrderItem": {
+          "tmf_spec": "TMF641",
+          "definition": "Individual service action within a service order",
+          "states": ["acknowledged", "inProgress", "pending", "completed", "failed"],
+          "relationships": {
+            "triggeredBy": ["ProductOrderItem"],
+            "requires": ["ResourceFacingService"],
+            "references": ["ServiceSpecification"]
+          },
+          "key_attributes": ["id", "action", "state", "service", "serviceSpecification"]
+        },
+        "Service": {
+          "tmf_spec": "TMF638",
+          "definition": "Technical service instance",
+          "types": ["CustomerFacingService", "ResourceFacingService"],
+          "relationships": {
+            "realizes": ["Product"],
+            "requires": ["Resource"],
+            "instanceOf": ["ServiceSpecification"]
+          },
+          "key_attributes": ["id", "state", "serviceType", "serviceSpecification"]
+        },
+        "ServiceSpecification": {
+          "tmf_spec": "TMF633",
+          "definition": "Template defining service characteristics",
+          "relationships": {
+            "requiredBy": ["ProductOffering"],
+            "requires": ["ResourceSpecification"]
+          },
+          "key_attributes": ["id", "name", "serviceType", "resourceSpecification"]
+        }
+      }
+    },
+    "resource": {
+      "description": "Physical/virtual infrastructure layer",
+      "entities": {
+        "Resource": {
+          "tmf_spec": "TMF639",
+          "definition": "Physical or virtual infrastructure component",
+          "types": ["PhysicalResource", "LogicalResource"],
+          "states": ["planning", "installing", "operating", "retiring"],
+          "relationships": {
+            "supports": ["Service"],
+            "instanceOf": ["ResourceSpecification"],
+            "locatedAt": ["Place"]
+          },
+          "key_attributes": ["id", "name", "resourceType", "operationalState", "usageState"]
+        },
+        "ResourceSpecification": {
+          "tmf_spec": "TMF634",
+          "definition": "Template for resource characteristics",
+          "relationships": {
+            "requiredBy": ["ServiceSpecification"]
+          },
+          "key_attributes": ["id", "name", "resourceType", "category"]
+        },
+        "ResourcePool": {
+          "tmf_spec": "TMF685",
+          "definition": "Collection of available resources",
+          "relationships": {
+            "contains": ["Resource"]
+          },
+          "key_attributes": ["id", "capacity", "available", "reserved"]
+        }
+      }
+    }
+  },
+  "dependency_rules": {
+    "order_orchestration": {
+      "rule_1": "ProductOrder.state=inProgress requires at least one ProductOrderItem.state=inProgress",
+      "rule_2": "ProductOrderItem cannot complete until triggered ServiceOrderItem completes",
+      "rule_3": "ServiceOrderItem.state=pending indicates waiting for Resource availability",
+      "rule_4": "ServiceOrderItem cannot progress if required ResourceSpecification not satisfied"
+    },
+    "state_transitions": {
+      "rule_5": "ProductOrder.state cannot be 'completed' if any ProductOrderItem.state in ['inProgress', 'pending', 'failed']",
+      "rule_6": "ServiceOrder.state=held indicates manual intervention required",
+      "rule_7": "Resource.usageState=reserved blocks availability for ResourcePool"
+    }
+  },
+  "diagnostic_patterns": {
+    "stuck_order_indicators": [
+      {
+        "pattern": "ProductOrder.state=inProgress AND ServiceOrder.state=pending",
+        "likely_cause": "Resource constraint or service configuration issue"
+      },
+      {
+        "pattern": "ServiceOrderItem.state=pending AND Resource.operationalState!=operating",
+        "likely_cause": "Required resource not ready"
+      },
+      {
+        "pattern": "ServiceOrderItem requires ResourceSpec X but ResourcePool.available=0",
+        "likely_cause": "Resource inventory depleted"
+      }
+    ]
+  }
+}

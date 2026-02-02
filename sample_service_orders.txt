@@ -1,0 +1,172 @@
+[
+  {
+    "@type": "ServiceOrder",
+    "tmf_spec": "TMF641",
+    "id": "SO-2026-11234",
+    "href": "/serviceOrderingManagement/v4/serviceOrder/SO-2026-11234",
+    "externalId": "PO-2026-00847:POI-001",
+    "state": "pending",
+    "orderDate": "2026-01-20T10:22:00Z",
+    "requestedCompletionDate": "2026-01-24T17:00:00Z",
+    "category": "access",
+    "description": "Upgrade fiber access from 100Mbps to 500Mbps",
+    "relatedParty": [
+      {
+        "id": "CUST-847392",
+        "role": "customer"
+      }
+    ],
+    "serviceOrderItem": [
+      {
+        "id": "SOI-001",
+        "action": "modify",
+        "state": "pending",
+        "service": {
+          "id": "SVC-ACCESS-9847",
+          "name": "Fiber Access Service",
+          "serviceType": "CustomerFacingService",
+          "serviceSpecification": {
+            "id": "SPEC-FIBER-ACCESS",
+            "name": "Fiber Access Specification",
+            "href": "/serviceCatalogManagement/v4/serviceSpecification/SPEC-FIBER-ACCESS"
+          },
+          "serviceCharacteristic": [
+            {
+              "name": "currentBandwidth",
+              "value": "100Mbps"
+            },
+            {
+              "name": "targetBandwidth",
+              "value": "500Mbps"
+            },
+            {
+              "name": "accessType",
+              "value": "GPON"
+            }
+          ],
+          "place": {
+            "id": "SITE-MUM-847",
+            "name": "Acme Enterprises - Mumbai Office",
+            "role": "Service Delivery Point"
+          }
+        }
+      }
+    ],
+    "note": [
+      {
+        "date": "2026-01-20T10:22:00Z",
+        "author": "Service Orchestrator",
+        "text": "Service order created from ProductOrder POI-001"
+      },
+      {
+        "date": "2026-01-20T10:25:00Z",
+        "author": "Service Orchestrator",
+        "text": "Initiating service feasibility check"
+      },
+      {
+        "date": "2026-01-20T11:15:00Z",
+        "author": "Resource Manager",
+        "text": "PENDING: Current port capacity insufficient - requires port upgrade"
+      },
+      {
+        "date": "2026-01-20T11:16:00Z",
+        "author": "Resource Manager",
+        "text": "Auto-creating resource order RO-2026-5583 for port upgrade"
+      },
+      {
+        "date": "2026-01-21T08:00:00Z",
+        "author": "Resource Manager",
+        "text": "Waiting for resource availability - port capacity still at 92%"
+      }
+    ]
+  },
+  {
+    "@type": "ServiceOrder",
+    "tmf_spec": "TMF641",
+    "id": "SO-2026-11235",
+    "href": "/serviceOrderingManagement/v4/serviceOrder/SO-2026-11235",
+    "externalId": "PO-2026-00847:POI-002",
+    "state": "completed",
+    "orderDate": "2026-01-20T10:25:00Z",
+    "requestedCompletionDate": "2026-01-24T17:00:00Z",
+    "completionDate": "2026-01-20T14:30:00Z",
+    "category": "mobile",
+    "description": "Provision 2 new mobile voice lines",
+    "relatedParty": [
+      {
+        "id": "CUST-847392",
+        "role": "customer"
+      }
+    ],
+    "serviceOrderItem": [
+      {
+        "id": "SOI-002-A",
+        "action": "add",
+        "state": "completed",
+        "service": {
+          "id": "SVC-MOBILE-NEW-001",
+          "serviceType": "CustomerFacingService",
+          "serviceSpecification": {
+            "id": "SPEC-MOBILE-VOICE",
+            "name": "Mobile Voice Service Specification"
+          },
+          "serviceCharacteristic": [
+            {
+              "name": "msisdn",
+              "value": "+91-20-47382911"
+            },
+            {
+              "name": "simType",
+              "value": "eSIM"
+            }
+          ]
+        }
+      },
+      {
+        "id": "SOI-002-B",
+        "action": "add",
+        "state": "completed",
+        "service": {
+          "id": "SVC-MOBILE-NEW-002",
+          "serviceType": "CustomerFacingService",
+          "serviceSpecification": {
+            "id": "SPEC-MOBILE-VOICE",
+            "name": "Mobile Voice Service Specification"
+          },
+          "serviceCharacteristic": [
+            {
+              "name": "msisdn",
+              "value": "+91-20-47382912"
+            },
+            {
+              "name": "simType",
+              "value": "eSIM"
+            }
+          ]
+        }
+      }
+    ],
+    "note": [
+      {
+        "date": "2026-01-20T10:25:00Z",
+        "author": "Service Orchestrator",
+        "text": "Service order created from ProductOrder POI-002"
+      },
+      {
+        "date": "2026-01-20T10:30:00Z",
+        "author": "Resource Manager",
+        "text": "SIM cards reserved from pool POOL-SIM-MH-01"
+      },
+      {
+        "date": "2026-01-20T10:32:00Z",
+        "author": "Resource Manager",
+        "text": "Phone numbers allocated from pool POOL-NUM-020"
+      },
+      {
+        "date": "2026-01-20T14:30:00Z",
+        "author": "Service Orchestrator",
+        "text": "Both mobile lines provisioned successfully"
+      }
+    ]
+  }
+]

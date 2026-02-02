@@ -1,0 +1,258 @@
+{
+  "resources": [
+    {
+      "@type": "PhysicalResource",
+      "tmf_spec": "TMF639",
+      "id": "RES-PORT-MUM12-GE108",
+      "name": "GE Port 1/0/8 at Mumbai CO-12",
+      "resourceType": "Port",
+      "category": "NetworkPort",
+      "operationalState": "enable",
+      "usageState": "active",
+      "administrativeState": "unlocked",
+      "resourceStatus": "available",
+      "resourceCharacteristic": [
+        {
+          "name": "portType",
+          "value": "GigabitEthernet"
+        },
+        {
+          "name": "maxCapacity",
+          "value": "1000Mbps"
+        },
+        {
+          "name": "currentUtilization",
+          "value": "920Mbps"
+        },
+        {
+          "name": "utilizationPercent",
+          "value": "92%"
+        },
+        {
+          "name": "availableCapacity",
+          "value": "80Mbps"
+        }
+      ],
+      "resourceSpecification": {
+        "id": "SPEC-GE-PORT",
+        "name": "Gigabit Ethernet Port Specification"
+      },
+      "place": {
+        "id": "CO-MUM-12",
+        "name": "Mumbai Central Office 12",
+        "role": "Central Office"
+      },
+      "relatedParty": [
+        {
+          "id": "CUST-847392",
+          "name": "Acme Enterprises Ltd",
+          "role": "user"
+        }
+      ],
+      "resourceRelationship": [
+        {
+          "relationshipType": "supports",
+          "resource": {
+            "id": "SVC-ACCESS-9847",
+            "name": "Fiber Access Service - Acme"
+          }
+        }
+      ],
+      "note": [
+        {
+          "date": "2026-01-20T11:15:00Z",
+          "author": "Capacity Management",
+          "text": "Port at 92% utilization - cannot support 500Mbps upgrade without port change"
+        }
+      ]
+    },
+    {
+      "@type": "PhysicalResource",
+      "tmf_spec": "TMF639",
+      "id": "RES-PORT-MUM12-GE115",
+      "name": "GE Port 1/1/5 at Mumbai CO-12",
+      "resourceType": "Port",
+      "category": "NetworkPort",
+      "operationalState": "disable",
+      "usageState": "idle",
+      "administrativeState": "locked",
+      "resourceStatus": "standby",
+      "resourceCharacteristic": [
+        {
+          "name": "portType",
+          "value": "GigabitEthernet"
+        },
+        {
+          "name": "maxCapacity",
+          "value": "1000Mbps"
+        },
+        {
+          "name": "currentUtilization",
+          "value": "0Mbps"
+        },
+        {
+          "name": "utilizationPercent",
+          "value": "0%"
+        },
+        {
+          "name": "availableCapacity",
+          "value": "1000Mbps"
+        }
+      ],
+      "resourceSpecification": {
+        "id": "SPEC-GE-PORT",
+        "name": "Gigabit Ethernet Port Specification"
+      },
+      "place": {
+        "id": "CO-MUM-12",
+        "name": "Mumbai Central Office 12",
+        "role": "Central Office"
+      },
+      "note": [
+        {
+          "date": "2026-01-18T14:00:00Z",
+          "author": "Field Engineer",
+          "text": "Port physically installed but not commissioned - pending fiber cross-connect"
+        },
+        {
+          "date": "2026-01-20T11:16:00Z",
+          "author": "Resource Manager",
+          "text": "Reserved for RO-2026-5583 - Port upgrade for CUST-847392"
+        }
+      ]
+    },
+    {
+      "@type": "LogicalResource",
+      "tmf_spec": "TMF639",
+      "id": "RES-SIM-POOL-MH01",
+      "name": "SIM Card Pool - Maharashtra 01",
+      "resourceType": "ResourcePool",
+      "category": "InventoryPool",
+      "operationalState": "enable",
+      "usageState": "active",
+      "resourceCharacteristic": [
+        {
+          "name": "poolType",
+          "value": "SIM_CARD"
+        },
+        {
+          "name": "totalCapacity",
+          "value": "500"
+        },
+        {
+          "name": "available",
+          "value": "247"
+        },
+        {
+          "name": "reserved",
+          "value": "38"
+        },
+        {
+          "name": "allocated",
+          "value": "215"
+        }
+      ],
+      "resourceSpecification": {
+        "id": "SPEC-ESIM-CARD",
+        "name": "eSIM Card Specification"
+      },
+      "place": {
+        "id": "WH-PUNE-01",
+        "name": "Warehouse Pune 01",
+        "role": "Warehouse"
+      }
+    },
+    {
+      "@type": "LogicalResource",
+      "tmf_spec": "TMF639",
+      "id": "RES-NUM-POOL-020",
+      "name": "Phone Number Pool - Area Code 020",
+      "resourceType": "ResourcePool",
+      "category": "LogicalInventoryPool",
+      "operationalState": "enable",
+      "usageState": "active",
+      "resourceCharacteristic": [
+        {
+          "name": "poolType",
+          "value": "PHONE_NUMBER"
+        },
+        {
+          "name": "areaCode",
+          "value": "020"
+        },
+        {
+          "name": "numberType",
+          "value": "Mobile"
+        },
+        {
+          "name": "totalCapacity",
+          "value": "1000"
+        },
+        {
+          "name": "available",
+          "value": "47"
+        },
+        {
+          "name": "reserved",
+          "value": "12"
+        },
+        {
+          "name": "allocated",
+          "value": "941"
+        }
+      ],
+      "resourceSpecification": {
+        "id": "SPEC-MOBILE-NUMBER",
+        "name": "Mobile Phone Number Specification"
+      }
+    }
+  ],
+  "resourceOrders": [
+    {
+      "@type": "ResourceOrder",
+      "id": "RO-2026-5583",
+      "state": "acknowledged",
+      "orderDate": "2026-01-20T11:16:00Z",
+      "requestedCompletionDate": "2026-01-22T17:00:00Z",
+      "category": "installation",
+      "description": "Commission port GE-1/1/5 and migrate customer from GE-1/0/8",
+      "relatedServiceOrder": "SO-2026-11234",
+      "resourceOrderItem": [
+        {
+          "id": "ROI-001",
+          "action": "install",
+          "state": "acknowledged",
+          "resource": {
+            "id": "RES-PORT-MUM12-GE115",
+            "name": "GE Port 1/1/5"
+          },
+          "appointment": {
+            "id": "APPT-2026-3384",
+            "description": "Field engineer visit for fiber cross-connect",
+            "validFor": {
+              "startDateTime": "2026-01-22T09:00:00Z",
+              "endDateTime": "2026-01-22T13:00:00Z"
+            }
+          }
+        }
+      ],
+      "note": [
+        {
+          "date": "2026-01-20T11:16:00Z",
+          "author": "Resource Manager",
+          "text": "Auto-generated from SO-2026-11234 - requires field engineer dispatch"
+        },
+        {
+          "date": "2026-01-20T15:30:00Z",
+          "author": "Work Order System",
+          "text": "Field engineer assigned - scheduled for Jan 22"
+        },
+        {
+          "date": "2026-01-21T08:00:00Z",
+          "author": "Work Order System",
+          "text": "Awaiting field completion - ETA 2 days"
+        }
+      ]
+    }
+  ]
+}

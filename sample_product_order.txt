@@ -1,0 +1,113 @@
+{
+  "@type": "ProductOrder",
+  "tmf_spec": "TMF622",
+  "id": "PO-2026-00847",
+  "href": "/productOrderingManagement/v4/productOrder/PO-2026-00847",
+  "externalId": "CUST-REQ-38492",
+  "state": "inProgress",
+  "orderDate": "2026-01-20T09:15:00Z",
+  "requestedCompletionDate": "2026-01-24T17:00:00Z",
+  "expectedCompletionDate": "2026-01-24T17:00:00Z",
+  "completionDate": null,
+  "category": "Business",
+  "description": "Upgrade fiber + add mobile lines for Enterprise Customer",
+  "relatedParty": [
+    {
+      "id": "CUST-847392",
+      "name": "Acme Enterprises Ltd",
+      "role": "customer",
+      "@referredType": "Organization"
+    }
+  ],
+  "productOrderItem": [
+    {
+      "id": "POI-001",
+      "action": "modify",
+      "state": "inProgress",
+      "quantity": 1,
+      "product": {
+        "id": "PROD-9847-FIBER",
+        "name": "Business Fiber Internet",
+        "productOffering": {
+          "id": "OFF-FIBER-100",
+          "name": "Fiber 100Mbps Business"
+        },
+        "productCharacteristic": [
+          {
+            "name": "bandwidth",
+            "value": "100Mbps",
+            "valueType": "string"
+          }
+        ]
+      },
+      "productOffering": {
+        "id": "OFF-FIBER-500",
+        "name": "Fiber 500Mbps Business",
+        "href": "/productCatalogManagement/v4/productOffering/OFF-FIBER-500"
+      },
+      "itemPrice": [
+        {
+          "priceType": "recurring",
+          "price": {
+            "taxIncludedAmount": 8999.00,
+            "unit": "INR"
+          },
+          "recurringChargePeriod": "monthly"
+        }
+      ]
+    },
+    {
+      "id": "POI-002",
+      "action": "add",
+      "state": "acknowledged",
+      "quantity": 2,
+      "productOffering": {
+        "id": "OFF-MOBILE-VOICE",
+        "name": "Mobile Voice Line - Business",
+        "href": "/productCatalogManagement/v4/productOffering/OFF-MOBILE-VOICE"
+      },
+      "itemPrice": [
+        {
+          "priceType": "recurring",
+          "price": {
+            "taxIncludedAmount": 599.00,
+            "unit": "INR"
+          },
+          "recurringChargePeriod": "monthly"
+        }
+      ]
+    }
+  ],
+  "note": [
+    {
+      "date": "2026-01-20T09:15:00Z",
+      "author": "System",
+      "text": "Order received via web portal"
+    },
+    {
+      "date": "2026-01-20T09:17:00Z",
+      "author": "OMS",
+      "text": "Feasibility check initiated"
+    },
+    {
+      "date": "2026-01-20T10:22:00Z",
+      "author": "OMS",
+      "text": "ServiceOrder SO-2026-11234 created for POI-001"
+    },
+    {
+      "date": "2026-01-20T10:25:00Z",
+      "author": "OMS",
+      "text": "ServiceOrder SO-2026-11235 created for POI-002"
+    },
+    {
+      "date": "2026-01-20T14:30:00Z",
+      "author": "System",
+      "text": "POI-002 completed - mobile lines provisioned"
+    },
+    {
+      "date": "2026-01-21T08:00:00Z",
+      "author": "System",
+      "text": "POI-001 still in progress - pending service order completion"
+    }
+  ]
+}
